@@ -25,23 +25,24 @@ import javax.swing.border.EtchedBorder;
 
 //√лавный класс, реализуюй интерфейс ActionListener
 //»нтерфейс нужен дл€ обработки событи€ нажати€ на кнопку
- class klient implements ActionListener{
+public class SalaryCalcjunior implements ActionListener{
 
     
-    JFrame frame = new JFrame(" алькул€тор промежуточного зароботка"); //главное окно
+    JFrame frame = new JFrame(" алькул€тор промежуточной зарплаты"); //главное окно
     JPanel panelLeft = new JPanel(); //панель с метками
     JPanel panelRight = new JPanel(); //панель с текстовыми пол€ми
     JPanel panelBottom = new JPanel(); //панель с кнопками 
     public JTextField[] arrTf = new JTextField[4];//массив текстовых полей
     
+    
     //конструктор
-   klient(){
+    public SalaryCalcjunior(){
         
         //устанавливаем менеджер компоновки дл€ панели с метками
         //делаем выравнивание по вертикали
         panelLeft.setLayout(new BoxLayout(panelLeft, BoxLayout.Y_AXIS));
         //устанавлиаем  размер 250 на 300 пикселей
-        panelLeft.setPreferredSize(new Dimension(250, 350));
+        panelLeft.setPreferredSize(new Dimension(250, 300));
         
         //устанавливаем менеджер компоновки дл€ панели с текстовыми пол€ми
         //делаем выравнивание по вертикали
@@ -53,12 +54,12 @@ import javax.swing.border.EtchedBorder;
         addLabel(panelLeft, "“арифна€ ставка (в час):", Color.RED);
         addLabel(panelLeft, "–абочий день (часы):", Color.RED);
         addLabel(panelLeft, " оличество отработанных дней:", Color.RED);
-        addLabel(panelLeft, "¬аш промежуточный заработок :", Color.BLUE);
+        addLabel(panelLeft, "ѕромежуточна€ зарплата:", Color.BLUE);
         
         //добавл€ем текстовые пол€ через цикл и записываем их в массив
         for(int i=0; i<arrTf.length; i++){
             //записываем ссылку из метода в массив дл€ дальнейшей работы с 
-            //тестовым полем
+            //тестовым поелм
             arrTf[i] = addTextField(panelRight);
         }
         
@@ -66,9 +67,9 @@ import javax.swing.border.EtchedBorder;
         JButton calc = addButton(panelBottom, "–асчет");
         //добавл€ем слушатель на событие нажати€
         calc.addActionListener(this);
-        JButton exit = addButton(panelBottom, "¬ыход");
+        JButton reset = addButton(panelBottom, "¬ыход");
         //добавл€ем слушатель на событие нажати€
-        exit.addActionListener(this);
+        reset.addActionListener(this);
         
         
         //делаем главную форму видимой
@@ -116,6 +117,7 @@ import javax.swing.border.EtchedBorder;
         JTextField tf = new JTextField();
         //устанавливаем его максимально допустимый размер
         tf.setMaximumSize(new Dimension(150,20));
+        
         //добавл€ем текстовое поле на панель
         container.add(tf);
         //возвращаем ссылку на текстовое поле
@@ -140,21 +142,18 @@ import javax.swing.border.EtchedBorder;
     
     //метод расчета зарплаты
     public void calcSalary() throws Exception{
-    	//получаем текст из первого текстового пол€, преобразовываем его в тип double и записываем
-        //в переменную
         double stavka = Double.valueOf(arrTf[0].getText()); //ставка
         double hours = Double.valueOf(arrTf[1].getText()); //часы работы
         double days = Double.valueOf(arrTf[2].getText()); //дни работы
-        double pribil = stavka * hours * days; //расчет прибыли      
-        arrTf[3].setText(String.format("%.2f", pribil)); //выводим прибыль в 4-е текстовое поле
-   
+        double pribil = stavka * hours * days; //расчет прибыли
+        arrTf[3].setText(String.format("%.2f", pribil)); //выводим прибыль в 5-е текстовое поле
     }
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new klient();
+                new SalaryCalcjunior();
             }
         });
     }
@@ -171,10 +170,12 @@ import javax.swing.border.EtchedBorder;
                 JOptionPane.showMessageDialog(null, "ѕроверьте правильность ввода");
             }
             
-        }else {
+        }else{
+            //выходим
         	System.exit(0);
             }
         }
         
     }
     
+

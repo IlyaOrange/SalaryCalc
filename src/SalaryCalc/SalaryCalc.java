@@ -25,7 +25,7 @@ import javax.swing.border.EtchedBorder;
 
 //Главный класс, реализуюй интерфейс ActionListener
 //Интерфейс нужен для обработки события нажатия на кнопку
- class formalasta implements ActionListener{
+public class SalaryCalc implements ActionListener{
 
     
     JFrame frame = new JFrame("Зарплатный калькулятор"); //главное окно
@@ -36,13 +36,13 @@ import javax.swing.border.EtchedBorder;
     
     
     //конструктор
-    formalasta(){
+    public SalaryCalc(){
         
         //устанавливаем менеджер компоновки для панели с метками
         //делаем выравнивание по вертикали
         panelLeft.setLayout(new BoxLayout(panelLeft, BoxLayout.Y_AXIS));
         //устанавлиаем  размер 250 на 300 пикселей
-        panelLeft.setPreferredSize(new Dimension(250, 350));
+        panelLeft.setPreferredSize(new Dimension(250, 300));
         
         //устанавливаем менеджер компоновки для панели с текстовыми полями
         //делаем выравнивание по вертикали
@@ -65,7 +65,7 @@ import javax.swing.border.EtchedBorder;
         //добавляем текстовые поля через цикл и записываем их в массив
         for(int i=0; i<arrTf.length; i++){
             //записываем ссылку из метода в массив для дальнейшей работы с 
-            //тестовым полем
+            //тестовым поелм
             arrTf[i] = addTextField(panelRight);
         }
         
@@ -73,9 +73,9 @@ import javax.swing.border.EtchedBorder;
         JButton calc = addButton(panelBottom, "Расчет");
         //добавляем слушатель на событие нажатия
         calc.addActionListener(this);
-        JButton exit = addButton(panelBottom, "Выход");
+        JButton reset = addButton(panelBottom, "Сброс");
         //добавляем слушатель на событие нажатия
-        exit.addActionListener(this);
+        reset.addActionListener(this);
         
         
         //делаем главную форму видимой
@@ -84,8 +84,8 @@ import javax.swing.border.EtchedBorder;
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //устанавливаем начальное положение относительно центра экрана (по центру)
         frame.setLocationRelativeTo(null);
-        //Устанавливаем размер главного окна(400 на 250)
-        frame.setSize(400,280);
+        //Устанавливаем размер главного окна(400 на 285)
+        frame.setSize(400,285);
         //Добавляем метку с информацией к работе в самый верх окна
         JLabel top = new JLabel("Красные поля являются обязательными для заполнения");
         //устанавливаем выравнивание текста в метке по центру
@@ -123,6 +123,7 @@ import javax.swing.border.EtchedBorder;
         JTextField tf = new JTextField();
         //устанавливаем его максимально допустимый размер
         tf.setMaximumSize(new Dimension(150,20));
+        
         //добавляем текстовое поле на панель
         container.add(tf);
         //возвращаем ссылку на текстовое поле
@@ -147,31 +148,29 @@ import javax.swing.border.EtchedBorder;
     
     //метод расчета зарплаты
     public void calcSalary() throws Exception{
-    	//получаем текст из первого текстового поля, преобразовываем его в тип string и записываем
-        //в переменную ставка
-    	String lol = String.format(arrTf[0].getText());
-    	//получаем текст из первого текстового поля, преобразовываем его в тип double и записываем
+    	String lol= String.format(arrTf[0].getText());
+        //получаем текст из первого текстового поля, преобразовываем его в тип double и записываем
         //в переменную ставка
         double stavka = Double.valueOf(arrTf[1].getText()); //ставка
         double hours = Double.valueOf(arrTf[2].getText()); //часы работы
         double days = Double.valueOf(arrTf[3].getText()); //дни работы
-        double stavkaNalog = Double.valueOf(arrTf[4].getText()); //ставка налога
+        double stavkaNalog = Double.valueOf(arrTf[3].getText()); //ставка налога
         double pribil = stavka * hours * days; //расчет прибыли
         double prem = pribil * 0.1; //расчет премии 
         double nalog = (pribil + prem) * stavkaNalog / 100; //расчет налога
         double result = pribil + prem - nalog; //считаем зп на руки
-        arrTf[5].setText(String.format(lol));//выводим ФИО в 6 текстовое поле
-        arrTf[6].setText(String.format("%.2f", pribil)); //выводим прибыль в 7-е текстовое поле
-        arrTf[7].setText(String.format("%.2f", prem)); //выводим премию в 8-е т.п.
-        arrTf[8].setText(String.format("%.2f", nalog)); //выводим налог в 9-е т.п.
-        arrTf[9].setText(String.format("%.2f", result)); //выводим зп на руки в 10-е т.п.
+        arrTf[5].setText(String.format(lol));
+        arrTf[6].setText(String.format("%.2f", pribil)); //выводим прибыль в 5-е текстовое поле
+        arrTf[7].setText(String.format("%.2f", prem)); //выводим премию в 6-е т.п.
+        arrTf[8].setText(String.format("%.2f", nalog)); //выводим налог в 7-е т.п.
+        arrTf[9].setText(String.format("%.2f", result)); //выводим зп на руки в 8-е т.п.
     }
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new formalasta();
+                new SalaryCalc();
             }
         });
     }
@@ -189,9 +188,10 @@ import javax.swing.border.EtchedBorder;
             }
             
         }else{
-        	System.exit(0);
-            }
+            //Выходим
+        	System.exit(0);            }
         }
         
     }
     
+
